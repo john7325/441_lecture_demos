@@ -3,12 +3,14 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.send('this is the desserts');
 });
 
 
 router.get('/1', function(req, res, next) {
-  res.send('responding with info about user 1');
-});
+    res.send('Chocolate Cake!!');
+  });
+
+
 
 export default router;
