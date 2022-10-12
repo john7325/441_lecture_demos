@@ -5,8 +5,18 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/getPterosaurs', async function(req, res) {
   const data = await fs.readFile("data/pterosaur.json")
+  let pterosaurInfo = JSON.parse(data)
 
-  res.send(data);
+  // filter out any without images
+  let filteredPterosaurInfo = pterosaurInfo.filter(onePterosaur => {
+    if(onePterosaur.img != ""){
+        return true
+    }else{
+        return false
+    }
+  })
+
+  res.json(filteredPterosaurInfo);
 });
 
 export default router;
