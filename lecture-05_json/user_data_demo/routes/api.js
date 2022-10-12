@@ -1,22 +1,9 @@
 import {promises as fs} from 'fs'
+import usersRouter from './users.js';
 import express from 'express';
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/getPterosaurs', async function(req, res) {
-  const data = await fs.readFile("data/pterosaur.json")
-  let pterosaurInfo = JSON.parse(data)
+router.use('/users', usersRouter)
 
-  // filter out any without images
-  let filteredPterosaurInfo = pterosaurInfo.filter(onePterosaur => {
-    if(onePterosaur.img != ""){
-        return true
-    }else{
-        return false
-    }
-  })
-
-  res.json(filteredPterosaurInfo);
-});
 
 export default router;

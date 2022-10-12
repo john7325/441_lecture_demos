@@ -3,7 +3,6 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-import usersRouter from './routes/users.js';
 import apiRouter from './routes/api.js';
 
 import { fileURLToPath } from 'url';
@@ -20,7 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', usersRouter);
 app.use('/api', apiRouter)
 
 export default app;
