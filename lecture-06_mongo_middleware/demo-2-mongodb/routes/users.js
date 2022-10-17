@@ -5,7 +5,13 @@ var router = express.Router();
 router.post('/', async (req, res) =>{
   console.log(req.body)
 
-  await fs.writeFile("data/userData.json", JSON.stringify(req.body))
+  const newUser = new req.models.User({
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    favorite_ice_cream: req.body.favorite_ice_cream
+  })
+
+  await newUser.save()
 
   res.send("success")
 })
