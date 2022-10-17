@@ -13,7 +13,7 @@ async function createUser(){
   console.log(myData)
 
   // send post request to server
-  let response = await fetch("api/users", {
+  let response = await fetch("api/v1/users", {
     method: "POST",
     body: JSON.stringify(myData),
     headers: {
@@ -25,7 +25,7 @@ async function createUser(){
 
 
 async function getUsers(){
-  let response = await fetch("api/users")
+  let response = await fetch("api/v1/users")
   let userData = await response.json()
   console.log(userData)
 
