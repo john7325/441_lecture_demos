@@ -17,6 +17,7 @@ const appSettings = {
     }
 };
 
+
 import usersRouter from './routes/users.js';
 
 import { fileURLToPath } from 'url';
@@ -55,4 +56,11 @@ app.get('/signout',
     msid.signOut({postLogoutRedirect: '/'})
 )
 
+app.get('/error', (req, res) => {
+    res.status(500).send("Error: Server error")
+})
+
+app.get('/unauthorized', (req, res) => {
+    res.status(401).send("Error: Unauthorized")
+})
 export default app;
