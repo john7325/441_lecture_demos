@@ -21,6 +21,7 @@ import usersRouter from './routes/users.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { ppid } from 'process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -41,6 +42,17 @@ app.use(sessions({
     resave: false
 }))
 
+const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
+app.use(msid.initialize())
+
 app.use('/users', usersRouter);
+
+app.get('/signin', 
+    msid.signIn({postLoginRedirect: '/'})
+)
+
+app.get('/signout',
+    msid.signOut({postLogoutRedirect: '/'})
+)
 
 export default app;
