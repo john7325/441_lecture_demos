@@ -3,6 +3,19 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import sessions from 'express-session'
+import msIdExpress from 'microsoft-identity-express'
+const appSettings = {
+    appCredentials: {
+        clientId:  "Client ID HERE",
+        tenantId:  "Tenant ID (directory Id) here",
+        clientSecret:  "Client secret here"
+    },	
+    authRoutes: {
+        redirect: "http://localhost:3000/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+        error: "/error", // the wrapper will redirect to this route in case of any error.
+        unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
+    }
+};
 
 import usersRouter from './routes/users.js';
 
