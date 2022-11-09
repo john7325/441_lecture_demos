@@ -38,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) =>{
     req.models = models
+    req.stripe = stripe
     next()
 })
 

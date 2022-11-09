@@ -64,4 +64,33 @@ router.get('/getCart', async (req, res) => {
     res.json(combinedCartInfo)
 })
 
+async function calculateOrderAmount(req){
+    let cartInfo = JSON.parse(req.session.cartInfo)
+
+    let combinedCartInfo = await addPricesToCart(cartInfo, req.models)
+
+    let totalCost = combinedCartInfo
+        .map(item => item.price * item.itemCount)
+        .reduce((prev, curr) => prev + curr)
+    
+    return totalCost
+}
+
+router.post('/create-payment-intent', async(req, res) => {
+    let orderAmount = await calculateOrderAmount(req)
+
+    // create a PaymentIntent object with order amount
+    const paymentIntent = await req.stripe.paymentIntents.create({
+        amount: orderAmount * 100,
+        currency: "usd", // usd in stripe is actually us cents, so multiply by 100
+        automatic_payment_methods: {
+            enabled: true
+        }
+    })
+
+    res.send({
+        clientSecret: paymentIntent.client_secret
+    })
+})
+
 export default router;
