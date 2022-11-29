@@ -1,9 +1,19 @@
+import cache from "memory-cache"; 
 import express from 'express';
 var router = express.Router();
 
 router.get('/', async (req, res) => {
-    let allItems = await req.models.Item.find()
-    res.json(allItems)
+    let allItems = cache.get("allItems");
+
+    if (allItems) { 
+        console.log("Found items in my cache"); 
+    } else { 
+        allItems = await req.models.Item.find()
+        // Setting caching rule on client side
+        // res.set("Cache-Control", "public, max-age=30")
+        cache.put("allItems", allItems, 30 * 1000); 
+    }
+        res.json(allItems)
 })
 
 router.post('/saveCart', async (req, res) => {
